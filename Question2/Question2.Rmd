@@ -73,7 +73,7 @@ source('code/LondonTempPlot.R')
 This is just a quick overview of why the weather in London is bad! The average rainfall way exceeds South Africa and the average temperature is way lower! Just look at these figures from the last ten years...
 
 
-```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
+```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "", fig.ext = 'png', fig.height = 3, fig.width = 6}
 LondonRainPlot <- LondonPlot(data= LondonData) 
 
 LondonRainPlot  
@@ -81,7 +81,7 @@ LondonRainPlot
 ```
 
 You can see by the annual precipitation that it only came close to South Africa in 2005! And you can see in 2014 it was EXTREMELY high!
-```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure2}", fig.ext = 'png', fig.height = 6, fig.width = 7}
+```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "", fig.ext = 'png', fig.height = 6, fig.width = 7}
 LondonTempPlot(data=LondonData)
 ```
 

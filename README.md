@@ -314,30 +314,34 @@ NetflixDataActors <- read.csv("Question4/data/netflix/credits.csv")
 NetflixDataTitles <- read.csv("Question4/data/netflix/titles.csv")
 ```
 
-```{r}
-NetflixData <- left_join(NetflixDataActors, NetflixDataTitles, by='id') %>% as_tibble(.) %>% select()
-```
 
-What works for Netflix and what does not? We can see the correlation between imdb score and features such as runtime, 
-```{r}
-NetflixDatadf <- NetflixData %>% select(imdb_score, type, release_year, runtime, genres, production_countries)
-```
+What works for Netflix and what does not? We left join the two data frames according to matching the 'id' variable. We then create a data frame that has only the imdb_score, type, release_year, runtime, genres and production_countries variables.
 
-For movies, recent releases get higher imdb scores
+
+For movies, we can see that older releases get higher imdb scores. Newer movies do not get the best ratings, so should consider hosting older classic movies.
 ```{r}
-NetflixDataYear <- NetflixData %>% group_by(release_year) %>% summarise_at(vars(imdb_score), ~mean(.))
-NetflixDataYear %>% ggplot() + geom_col(aes(x=release_year, y=imdb_score), stat='identity', na.rm=T, color='orange') + theme_minimal() + coord_cartesian(ylim=c(5,8.5)) + labs(title="Average IMDB ratings for movies released in years from 1950s to 2000s")
+source('Question4/code/NetflixDataYearPlot.R')
+
+NetflixDataYearPlot(data1=NetflixDataActors, data2=NetflixDataTitles)
+
 ```
 
 Run time vs imdb scores?
-```{r}
 
-NetflixDatadf %>% ggplot() + geom_point(aes(x=runtime, y=imdb_score), group=1.6, color='pink', size=1) +theme_minimal() + coord_cartesian(xlim=c(0,100))
+Likely that the reduction after 60 minutes is captured by the SERIES variables in the data set and that there are increasing marginal returns to a longer movie, up until a point of around just before 200 minutes.
+```{r}
+NetflixData <- left_join(NetflixDataActors, NetflixDataTitles, by='id') %>% as_tibble(.) %>% select(role, name, imdb_score, type, release_year, runtime, genres, production_countries)
+
+    NetflixDataRuntime <- NetflixData %>% group_by(runtime) %>% summarise_at(vars(imdb_score), ~mean(., na.rm=T))
+    
+NetflixDataRuntime %>% ggplot() + geom_line(aes(x=runtime, y=imdb_score), group=1, color='pink', size=1.6) +theme_minimal() + labs(title="Uncertain relationship between IMDB score and run time of ")
 ```
 
 
 Which best actors to include in movies?
 ```{r}
 NetflixData %>% group_by(name) %>% filter(role=='ACTOR' & imdb_score>9.4) %>% select(name, imdb_score)
+
+
 ```
 
