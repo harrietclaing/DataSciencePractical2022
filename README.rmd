@@ -31,3 +31,34 @@ Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 ```
 
+
+First, we want to investigate the misconception of the experience of African countries with Covid compared with other regions.
+```{r}
+ReadCovidDataCSV <- function(dataroot){
+    library(readr)
+owid_covid_data <- read_csv(dataroot)
+}
+
+CovidData <- ReadCovidDataCSV("Question1/data/Covid/owid-covid-data.csv")
+View(CovidData)
+```
+
+```{r}
+CovidData %>% group_by(location) %>% summarise(count=n()) %>% mean(.)
+```
+In the Our World in Data folder, we have data on 6 continents and many rows for N/A. We have approximately 800 periods, not consistent. We could isolate for 2020 per month from March.
+
+```{r}
+library(lubridate)
+CovidAfricaPlotdf <- CovidData %>% mutate(month = month(date)) %>% select(continent, location, date, total_cases, month) %>% 
+subset(date> "2020-01-01" & date < "2020-12-31") %>% na.omit(.) %>% group_by(continent, month) %>% summarise_at(vars(total_cases), ~mean(.))
+
+CovidAfricaPlot <- CovidAfricaPlotdf %>% ggplot() + geom_col(aes(x=month, y=total_cases, fill=continent)) + labs(title="Evolution of Covid outbreak of total cases per month per continent in 2020") + ylab("Cumulative total cases") + xlab("Month in 2020")
+
+?na.omit
+CovidData %>% gather(Country,)
+CovidData %>% select(continent, location, date, total_cases, month) 
+
+%>% group_by(continent, date) %>% mutate(date=as.Date('%Y-%B'))
+```
+
