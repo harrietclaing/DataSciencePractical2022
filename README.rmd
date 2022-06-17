@@ -211,8 +211,37 @@ TennisData <-Data_Collating("Question3/data/Tennis")
 
 # Question 4
 
+We want to join the two datasets via 'id' variable. We are interested in seeing what 
+```{r}
+library(tidyverse)
+
+NetflixDataActors <- read.csv("Question4/data/netflix/credits.csv")
+NetflixDataTitles <- read.csv("Question4/data/netflix/titles.csv")
+```
 
 ```{r}
+NetflixData <- left_join(NetflixDataActors, NetflixDataTitles, by='id') %>% as_tibble(.) %>% select()
+```
 
+What works for Netflix and what does not? We can see the correlation between imdb score and features such as runtime, 
+```{r}
+NetflixDatadf <- NetflixData %>% select(imdb_score, type, release_year, runtime, genres, production_countries)
+```
+
+For movies, recent releases get higher imdb scores
+```{r}
+NetflixDatadf <- NetflixData %>% group_by(release_year) %>% summarise_at(vars(imdb_score), ~mean(.))
+NetflixDatadf %>% ggplot() + geom_col(aes(x=release_year, y=imdb_score), stat='identity', na.rm=T, scale) + theme_minimal()
+```
+
+Run time vs imdb scores?
+```{r}
+Netflixdf %>% ggplot() + geom_bar(aes(x=runtime, y=imdb_score), stat='identity')
+```
+
+
+Which best actors to include in movies?
+```{r}
+NetflixData %>% group_by(name) %>% filter(role=='ACTOR' & imdb_score>9.4) %>% select(name, imdb_score)
 ```
 
