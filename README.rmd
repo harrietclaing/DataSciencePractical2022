@@ -55,10 +55,37 @@ subset(date> "2020-01-01" & date < "2020-12-31") %>% na.omit(.) %>% group_by(con
 
 CovidAfricaPlot <- CovidAfricaPlotdf %>% ggplot() + geom_col(aes(x=month, y=total_cases, fill=continent)) + labs(title="Evolution of Covid outbreak of total cases per month per continent in 2020") + ylab("Cumulative total cases") + xlab("Month in 2020")
 
-?na.omit
-CovidData %>% gather(Country,)
-CovidData %>% select(continent, location, date, total_cases, month) 
 
-%>% group_by(continent, date) %>% mutate(date=as.Date('%Y-%B'))
+```
+
+This graph shows that Africa did not experience Covid as badly compared with other countries, on average per continent. 
+
+According to World Population Review, the countries that have the highest prevalence of smoking are:
+
+Nauru (52.10%)
+Kiribati (52.00%)
+Tuvalu (48.70%)
+Myanmar (45.50%)
+Chile (44.70%)
+Lebanon (42.60%)
+Serbia (40.60%)
+Bangladesh (39.10%)
+Greece (39.10%)
+Bulgaria (38.90%)
+
+Countries with high prevalence of poverty, did they experience a more severe covid? Ie compared to cases
+```{r}
+CovidSmokingdf <- CovidData %>% subset(location =="Nauru"|location =="Kiribati"|location =="Tuvalu"|location == "Myanmar"|location =="Chile"|location =="Lebanon"|location =="Serbia"|location == "Bangladesh"| location =="Greece"|location =="Bulgaria") %>% mutate(month = month(date)) %>% select(location, date, total_cases, month, total_deaths) %>% subset(date> "2020-01-01" & date < "2020-12-31") %>% na.omit(.) %>% group_by(location, month) %>% summarise_at(vars(c(total_cases, total_deaths)), ~mean(.)) 
+
+CovidSmokingPlot <- CovidSmokingdf %>% ggplot() + geom_col(aes(x=month, y=total_cases, fill=location)) 
+
+#compared to world average??
+CovidData %>% mutate(month = month(date)) %>% select(location, date, total_cases, month, total_deaths) %>% subset(date> "2020-01-01" & date < "2020-12-31") %>% na.omit(.) %>% group_by(location, month) %>% summarise_at(vars(c(total_cases, total_deaths)), ~mean(.)) 
+
+```
+
+How quickly did different regions increase hospitalisation facilities? Did that time series lead or lag on ICU admission rates?
+```{r}
+
 ```
 
