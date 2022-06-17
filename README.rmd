@@ -90,8 +90,47 @@ How quickly did different regions increase hospitalisation facilities? Did that 
 source('Question1/code/HospitalICUPlot.R')
 
 HospitalICUPlot(data=CovidData, Continent="Asia")
+HospitalICUPlot(data=CovidData, Continent="Asia") #change continents
+HospitalICUPlot(data=CovidData, Continent="Asia")
+HospitalICUPlot(data=CovidData, Continent="Asia")
+HospitalICUPlot(data=CovidData, Continent="Asia")
+HospitalICUPlot(data=CovidData, Continent="Asia")
 ```
 
 # Question 2
 
+```{r}
+ReadLondonDataCSV <- function(dataroot){
+    library(readr)
+    read_csv(dataroot)
+}
+
+LondonData <- ReadLondonDataCSV("Question2/data/London/london_weather.csv")
+```
+
+We first want to show the percentage of days in an average year that are sunny, based on previous 10 years. Data goes up to 31/12/2021. First, subset to last 10 years. Then, created Sunny dummy for days with some sunshine, but in order to be a good weather day the cloud cover must be less than 5.
+```{r}
+library(lubridate)
+
+LondonData %>% subset(date>20010101) %>% mutate(Sunny = ifelse(sunshine>0, 1, 0)) %>% mutate(GoodWeather = ifelse(cloud_cover < 5 & Sunny == 1, 1, 0)) 
+```
+
+Second, we want to try and show the rainfall over time. We want annual rainfall per year for the last ten years.
+```{r}
+library(readr)
+LondonData <- read.csv("Question2/data/London/london_weather.csv")
+
+source('Question2/code/LondonRainPlot.R')
+
+LondonRainPlot <- LondonPlot(data= LondonData)
+   
+```
+
+Third, we want to try and show average temperatures over time since 1970.
+```{r}
+
+source('Question2/code/LondonTempPlot.R')
+
+LondonTempPlot(data=LondonData)
+```
 
