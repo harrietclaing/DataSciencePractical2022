@@ -1,14 +1,9 @@
----
-output:
-  md_document:
-    variant: html_document
----
 
 # Data Science Practical 2022
 
 ## Setting up the Question folders
 
-I set up each question in Texevier and put each question's related data within its separate folder.
+I set up each question in Texevier and put each question's related data within its separate folder. I followed the prescribed file folder structure.
 
 ```{r}
 
@@ -30,6 +25,9 @@ Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_
 ```
 
 # Question 1: Evolution of Covid outbreak
+
+To investigate how Covid impacted different regions over the course of 2020, I created 3 types of plots.
+
 ```{r}
 library(tidyverse)
 library(lubridate)
@@ -38,15 +36,14 @@ library(gridExtra)
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 ```
 
+First, we create a function to read in our data and source the code. In the Our World in Data folder, we have data on 6 continents and many rows with values of N/A. We have approximately 800 time periods, but does not appear to be consistent. Therefore, we restrict our period of interest to 2020 and create values per month from January 2020 and removed the N/As for our functions.
 
-First, we create a function to read in our data and source the code.
 ```{r}
 source("Question1/code/ReadCovidDataCSV.R")
 
 CovidData <- ReadCovidDataCSV(dataroot="Question1/data/Covid/owid-covid-data.csv")
 
 ```
-In the Our World in Data folder, we have data on 6 continents and many rows with values of N/A. We have approximately 800 time periods, but does not appear to be consistent. Therefore, we restrict our period of interest to 2020 and create values per month from January 2020 and removed the N/As for our functions.
 
 ## Figure 1: Investigating the misconception of the experience of African countries with Covid compared with other regions.
 
@@ -151,68 +148,7 @@ LondonTempPlot(data=LondonData)
 
 # Question 3: Evolution of tennis players' performance over time
 
-First, write a function to read-in multiple csv sheets for rankings data
-
-```{r}
-Data_Collating <- function(Datroot){
-
-library(tidyverse)
-
-    # let's create a silent read function first (as it prints a load of nonsense if you use read_csv directly):
-    silentread <- function(x){
-        hushread <- purrr::quietly(read_csv)
-        df <- hushread(x)
-        df$result
-    }
-
-    datcolat <-
-        list.files(Datroot, full.names = T, recursive = T) %>%
-        # Ensure you only load the csv's, not the README.txt.
-        .[grepl("atp_matches", .)] %>%
-        as.list() %>%
-        map(~silentread(.)) %>% bind_rows()
-        # equivalent to using map_df
-
-    datcolat
-
-}
-
-TennisDataMatches <- Data_Collating("Question3/data/Tennis")
-tail(TennisDataMatches)
-#ONLY 2000S DATA
-```
-
-```{r}
-Data_Collating2 <- function(Datroot){
-
-library(tidyverse)
-
-    # let's create a silent read function first (as it prints a load of nonsense if you use read_csv directly):
-    silentread <- function(x){
-        hushread <- purrr::quietly(read_csv)
-        df <- hushread(x)
-        df$result
-    }
-
-    datcolat <-
-        list.files(Datroot, full.names = T, recursive = T) %>%
-        # Ensure you only load the csv's, not the README.txt.
-        .[grepl("atp_rankings_*.csv", .)] %>%
-        as.list() %>%
-        map(~silentread(.)) %>% bind_rows()
-        # equivalent to using map_df
-
-    datcolat
-
-}
-
-TennisDataRankings <- Data_Collating2("Question3/data/Tennis")
-```
-
-```{r}
-TennisData <- left_join(TennisDataMatches, TennisDataRankings, by=)
-```
-
+First, write a function to read-in multiple csv sheets for rankings data. I struggled to complete this question, but included my attempts...
 
 ```{r}
 library(tidyverse)
@@ -252,52 +188,28 @@ df <- list.files("Question3/data/Tennis" pattern = ".csv") %>%
             as.list(.) %>% 
             map_df(~read.csv(.))
  
-datcolat <- list.files("Question3/data/Tennis/") %>%
-        # Ensure you only load the csv's, not the README.txt.
+data <- list.files("Question3/data/Tennis/") %>%
         .[grepl(".csv", .)] %>%
         as.list() %>%
         map(~read.csv(.)) %>% bind_rows()
-        # equivalent to using map_df
 
-    datcolat
-            
-
-TennisData <- ReadinMultipleCSV("Question3/data/Tennis")
-    
-    %>%
-        map(~silentread(.)) %>% bind_rows()
-        # equivalent to using map_df
-
-Data_Collating <- function(Datroot){
-
-library(tidyverse)
-    library(dplyr)
-    library(vroom)
-
-    # let's create a silent read function first (as it prints a load of nonsense if you use read_csv directly):
-    silentread <- function(x){
-        hushread <- purrr::quietly(read_csv)
-        df <- hushread(x)
-        df$result
-    }
+    data
     
     
 files <- list.files("Question3/data/Tennis", full.names = T, recursive = T, row.names=F) %>% .[grepl("atp_matches",.)] %>%
         as.list() %>%
         map(~read.csv(.)) %>% bind_rows()
-?vroom
+
 
 files <- fs::dir_ls(path= "Question3/data/Tennis", glob = "atp_matches-.csv")
 
 data <- vroom(files, col_select = c(winner_name, winner_hand, winner_age, minutes, winner_ht, tourney_date), skip = 1)
 
 %>%
-        # Ensure you only load the csv's, not the README.txt.
         .[grepl("atp_matches-.csv", .)] %>%
         as.list() %>%
         map_df(~silentread(.)) 
-        # equivalent to using map_df
-datcolat
+
 }
 
 TennisData <-Data_Collating("Question3/data/Tennis")
@@ -306,7 +218,7 @@ TennisData <-Data_Collating("Question3/data/Tennis")
 
 # Question 4: Netflix streaming: Understanding what works and what doesn't
 
-We want to join the two datasets via 'id' variable. We are interested in seeing what 
+We want to join the two datasets via 'id' variable. We are interested in seeing what works for Netflix streaming sites, by using the IMDB score as a proxy.
 ```{r}
 library(tidyverse)
 

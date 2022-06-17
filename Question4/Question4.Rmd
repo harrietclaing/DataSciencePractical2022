@@ -136,8 +136,6 @@ source('code/NetflixRuntimePlot.R')
 
 # Introduction \label{Introduction}
 
-
-
 ```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
 
 NetflixDataYearPlot(data1=NetflixDataActors, data2=NetflixDataTitles)  
@@ -147,6 +145,8 @@ NetflixDataYearPlot(data1=NetflixDataActors, data2=NetflixDataTitles)
 ```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "", fig.ext = 'png', fig.height = 3, fig.width = 6}
 NetflixDataRuntimePlot(data1=NetflixDataActors, data2=NetflixDataTitles)
 ```
+We can conclude from this basic report, that there is not a strong relationship between year released and rating, but years before 1990 do seem to rate better. A streaming service should consider including old classics to be successful.
+However, there is an uncertain relationship between run time and rating on IMDB. This may be skewed by including both movies and series.
 
 ```{r, echo=FALSE}
 tabl <- "
@@ -163,6 +163,7 @@ tabl <- "
 "
 ```
 
+The best actors to have in movies are included in this table.
 
 ```{r, echo=F}
 cat(tabl)

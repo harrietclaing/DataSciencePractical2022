@@ -84,7 +84,7 @@ The data that is used is from Our World in Data and was subsetted to our period 
 
 ## Investigating the misconception of the experience of African countries with Covid compared with other regions.
 
-```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
+```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "", fig.ext = 'png', fig.height = 3, fig.width = 6}
 
 
 CovidAfricaPlot(CovidData)
@@ -116,7 +116,7 @@ CovidSmokingPlot <- CovidSmokingPlot(CovidData)
 
 CovidWorldAverage <- CovidWorldAverage(CovidData)
 
-CovidSmokingPlotFinal <- CovidSmokingPlot + geom_hline(yintercept = 0.034218, color='blue', size=1.5) + geom_text(aes(max(location), 0.034218,label = "Calculated world average (2020)", vjust = - 1), col = "blue")
+CovidSmokingPlotFinal <- CovidSmokingPlot + geom_hline(yintercept = 0.034218, color='blue', size=1.5) + geom_text(aes(max(location), 0.034218,label = "World average", vjust = - 1), col = "blue")
 
 CovidSmokingPlotFinal
 ```
