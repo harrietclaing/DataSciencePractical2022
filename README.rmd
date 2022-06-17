@@ -136,10 +136,27 @@ LondonTempPlot(data=LondonData)
 
 Question 3
 
-First, write a function to read-in multiple csv sheets.
+First, write a function to read-in multiple csv sheets for rankings data
 
 ```{r}
+library(tidyverse)
+library(readr)
+library(vroom)
 
+files <- list.files("Question3/data/Tennis", full.names = T, recursive = T) %>%
+            .[grepl("atp_matches_20*.csv", .)] %>%
+            map_df(~read.csv(.)) 
+class(files)
+as.vector(files)
+
+data <- vroom(files, col_select = c(!tourneyid, winner_name, winner_hand, winner_age, winner_ht, winner_ioc, winner_id, tourney_date), skip = 1)
+                  
+                  
+files <- fs::dir_ls(glob="atp_matches_20*.csv")
+files
+vroom(files)
+
+vroom()
 ```
 
 ```{r}
