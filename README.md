@@ -317,6 +317,7 @@ NetflixDataTitles <- read.csv("Question4/data/netflix/titles.csv")
 
 What works for Netflix and what does not? We left join the two data frames according to matching the 'id' variable. We then create a data frame that has only the imdb_score, type, release_year, runtime, genres and production_countries variables.
 
+# Figure 1: Year of release and IMDB scores
 
 For movies, we can see that older releases get higher imdb scores. Newer movies do not get the best ratings, so should consider hosting older classic movies.
 ```{r}
@@ -326,22 +327,34 @@ NetflixDataYearPlot(data1=NetflixDataActors, data2=NetflixDataTitles)
 
 ```
 
-Run time vs imdb scores?
+# Figure 2: Run time and imdb scores
 
 Likely that the reduction after 60 minutes is captured by the SERIES variables in the data set and that there are increasing marginal returns to a longer movie, up until a point of around just before 200 minutes.
 ```{r}
-NetflixData <- left_join(NetflixDataActors, NetflixDataTitles, by='id') %>% as_tibble(.) %>% select(role, name, imdb_score, type, release_year, runtime, genres, production_countries)
+source('Question4/code/NetflixRuntimePlot.R')
 
-    NetflixDataRuntime <- NetflixData %>% group_by(runtime) %>% summarise_at(vars(imdb_score), ~mean(., na.rm=T))
-    
-NetflixDataRuntime %>% ggplot() + geom_line(aes(x=runtime, y=imdb_score), group=1, color='pink', size=1.6) +theme_minimal() + labs(title="Uncertain relationship between IMDB score and run time of ")
+NetflixDataRuntimePlot(data1=NetflixDataActors, data2=NetflixDataTitles)
+
+
 ```
+# Table showing which actors yield the best IMDB scores
 
-
-Which best actors to include in movies?
+Which best actors to include in movies? The only actors in movies with an IMDB score higher than 9.4 are as follows in the table.
 ```{r}
 NetflixData %>% group_by(name) %>% filter(role=='ACTOR' & imdb_score>9.4) %>% select(name, imdb_score)
 
-
+tabl <- "
+| Name of actor | IMDB Score |
+|---------------|:----------:|
+|Bryan Cranston | 9.5        | 
+|Aaron Paul     | 9.5        | 
+|Anna Gunn      | 9.5        | 
+|Dean Norris    |9.5         |
+|Jonathan Banks |9.5         |
+|Bob Odenkirk   |9.5         |
+|Betsy Brandt   |9.5         |
+|RJ Mitte       |9.5         |
+"
+cat(tabl)
 ```
 
