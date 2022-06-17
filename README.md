@@ -51,6 +51,8 @@ This graph shows that Africa did not experience Covid as badly compared with oth
 source("Question1/code/CovidAfricaPlot.R")
 
 CovidAfricaPlot(CovidData)
+
+!(C:\Users\Harriet\Documents\DataSciencePractical2022\Question1\CovidAfricaPlot.png)
 ```
 
 ## Figure 2: Countries with high prevalence of smoking & severity of Covid
