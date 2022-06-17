@@ -4,13 +4,7 @@ output:
     variant: markdown_github
 ---
 
-# Purpose
 
-Purpose of this work folder.
-
-Ideally store a minimum working example data set in data folder.
-
-Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
 
 
 ```{r}
@@ -21,4 +15,19 @@ library(tidyverse)
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
+```{r}
+CHOSEN_LOCATION <- "C:/Users/Harriet/Documents/DataSciencePractical2022"
+fmxdat::make_project(FilePath = glue::glue("{CHOSEN_LOCATION}"), 
+                     ProjNam = "21617023")
+
+Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_name = "Question1")
+Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_name = "Question2")
+Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_name = "Question3")
+Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_name = "Question4")
+```
+
+# Question 1: Evolution of Covid outbreak
+```{r}
+list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+```
 
