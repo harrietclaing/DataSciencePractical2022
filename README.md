@@ -1,3 +1,8 @@
+---
+output:
+  md_document:
+    variant: html_document
+---
 
 # Data Science Practical 2022
 
@@ -52,7 +57,7 @@ source("Question1/code/CovidAfricaPlot.R")
 
 CovidAfricaPlot(CovidData)
 
-!(C:\Users\Harriet\Documents\DataSciencePractical2022\Question1\CovidAfricaPlot.png)
+/Question1/CovidAfricaPlot.png
 ```
 
 ## Figure 2: Countries with high prevalence of smoking & severity of Covid

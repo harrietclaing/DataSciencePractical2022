@@ -3,16 +3,16 @@ title: "Evolution of Covid outbreak"
 documentclass: elsarticle
 Thesis_FP: no
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     keep_tex: yes
     template: Tex/TexDefault.txt
     fig_width: 3.5
     fig_height: 3.5
+  html_document:
+    df_print: paged
 Author1: Harriet Laing^[]
 Ref1: Univeristy of Stellenbosch, Cape Town, South Africa
-Email1: 21617023@sun.ac.za
+#Email1: 21617023@sun.ac.za
 BottomRFooter: \footnotesize Page \thepage
 addtoprule: yes
 addfootrule: yes
@@ -127,48 +127,35 @@ Did that time series of hospital beds lead or lag on ICU admission rates? By rem
 
 According to the figures, we can see that generally the rates of hospitalisations were similar to rates of ICU admission, and occasionally led on ICU admission. Oceania was excluded because not enough data, and other regions are missing one of the values due to data constraints.
 
-### Asia
+## Asia
 ```{r}
 AsiaHospitalICUPlot <- HospitalICUPlot(Continent="Asia") + labs("Asia weekly hospital admissions and weekly ICU admissions")
 AsiaHospitalICUPlot
 ```
 
-### Africa
+## Africa
 ```{r}
 AfricaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="Africa") + labs("Africa weekly hospital admissions and weekly ICU admissions")
 AfricaHospitalICUPlot
 ```
 
-### Europe
+## Europe
 ```{r}
 EuropeHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="Europe") + labs("Europe weekly hospital admissions and weekly ICU admissions")
 EuropeHospitalICUPlot
 ```
 
-### North America
+## North America
 ```{r}
 NorthAmericaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="North America") + labs("North America weekly hospital admissions and weekly ICU admissions")
 NorthAmericaHospitalICUPlot
 ```
 
-### South America
+## South America
 ```{r}
 SouthAmericaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="South America") + labs("South America weekly hospital admissions and weekly ICU admissions")
 SouthAmericaHospitalICUPlot
 ```
 
-\newpage
 
-# References {-}
-
-<div id="refs"></div>
-
-
-# Appendix {-}
-
-## Appendix A {-}
-
-Some appendix information here
-
-## Appendix B {-}
 
