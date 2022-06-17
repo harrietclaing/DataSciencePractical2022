@@ -3,13 +3,13 @@ title: "Convincing you how bad London weather is!"
 documentclass: elsarticle
 Thesis_FP: no
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     keep_tex: yes
     template: Tex/TexDefault.txt
     fig_width: 3.5
     fig_height: 3.5
+  html_document:
+    df_print: paged
 Author1: Harriet Laing
 Ref1: University of Stellenbosch, Cape Town, South Africa
 Email1: nfkatzke\@gmail.com
@@ -81,7 +81,7 @@ LondonRainPlot
 ```
 
 You can see by the annual precipitation that it only came close to South Africa in 2005! And you can see in 2014 it was EXTREMELY high!
-```{r}
+```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure2}", fig.ext = 'png', fig.height = 6, fig.width = 7}
 LondonTempPlot(data=LondonData)
 ```
 
