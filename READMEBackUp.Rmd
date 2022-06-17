@@ -1,9 +1,11 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
 
-# Data Science Practical 2022
 
-## Setting up the Question folders
 
-I set up each question in Texevier and put each question's related data within its separate folder.
 
 ```{r}
 
@@ -26,32 +28,37 @@ Texevier::create_template(directory = glue::glue("{CHOSEN_LOCATION}"), template_
 
 # Question 1: Evolution of Covid outbreak
 ```{r}
-library(tidyverse)
-library(lubridate)
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 ```
 
 
-First, we create a function to read in our data and source the code.
+First, we want to investigate the misconception of the experience of African countries with Covid compared with other regions.
 ```{r}
-source("Question1/code/ReadCovidDataCSV.R")
+ReadCovidDataCSV <- function(dataroot){
+    library(readr)
+owid_covid_data <- read_csv(dataroot)
+}
 
-CovidData <- ReadCovidDataCSV(dataroot="Question1/data/Covid/owid-covid-data.csv")
-
-```
-In the Our World in Data folder, we have data on 6 continents and many rows with values of N/A. We have approximately 800 time periods, but does not appear to be consistent. Therefore, we restrict our period of interest to 2020 and create values per month from January 2020 and removed the N/As for our functions.
-
-## Figure 1: Investigating the misconception of the experience of African countries with Covid compared with other regions.
-
-This graph shows that Africa did not experience Covid as badly compared with other countries, in terms of new deaths on average per continent.
-
-```{r}
-source("Question1/code/CovidAfricaPlot.R")
-
-CovidAfricaPlot(CovidData)
+CovidData <- ReadCovidDataCSV("Question1/data/Covid/owid-covid-data.csv")
+View(CovidData)
 ```
 
-## Figure 2:
+```{r}
+CovidData %>% group_by(location) %>% summarise(count=n()) %>% mean(.)
+```
+In the Our World in Data folder, we have data on 6 continents and many rows for N/A. We have approximately 800 periods, not consistent. We could isolate for 2020 per month from March. Removed the N/As.
+
+```{r}
+library(lubridate)
+CovidAfricaPlotdf <- CovidData %>% mutate(month = month(date)) %>% select(continent, location, date, total_cases, month) %>% 
+subset(date> "2020-01-01" & date < "2020-12-31") %>% na.omit(.) %>% group_by(continent, month) %>% summarise_at(vars(total_cases), ~mean(.))
+
+CovidAfricaPlot <- CovidAfricaPlotdf %>% ggplot() + geom_col(aes(x=month, y=total_cases, fill=continent)) + labs(title="Evolution of Covid outbreak of total cases per month per continent in 2020") + ylab("Cumulative total cases") + xlab("Month in 2020")
+
+
+```
+
+This graph shows that Africa did not experience Covid as badly compared with other countries, on average per continent. 
 
 According to World Population Review, the countries that have the highest prevalence of smoking are:
 
@@ -90,7 +97,7 @@ HospitalICUPlot(data=CovidData, Continent="Asia")
 HospitalICUPlot(data=CovidData, Continent="Asia")
 ```
 
-# Question 2: London weather
+# Question 2
 
 ```{r}
 ReadLondonDataCSV <- function(dataroot){
@@ -127,7 +134,7 @@ source('Question2/code/LondonTempPlot.R')
 LondonTempPlot(data=LondonData)
 ```
 
-# Question 3: Evolution of tennis players' performance over time
+Question 3
 
 First, write a function to read-in multiple csv sheets for rankings data
 
@@ -282,7 +289,7 @@ TennisData <-Data_Collating("Question3/data/Tennis")
 ```
 
 
-# Question 4: Netflix streaming: Understanding what works and what doesn't
+# Question 4
 
 We want to join the two datasets via 'id' variable. We are interested in seeing what 
 ```{r}
@@ -318,4 +325,3 @@ Which best actors to include in movies?
 ```{r}
 NetflixData %>% group_by(name) %>% filter(role=='ACTOR' & imdb_score>9.4) %>% select(name, imdb_score)
 ```
-
