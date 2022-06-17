@@ -230,13 +230,14 @@ NetflixDatadf <- NetflixData %>% select(imdb_score, type, release_year, runtime,
 
 For movies, recent releases get higher imdb scores
 ```{r}
-NetflixDatadf <- NetflixData %>% group_by(release_year) %>% summarise_at(vars(imdb_score), ~mean(.))
-NetflixDatadf %>% ggplot() + geom_col(aes(x=release_year, y=imdb_score), stat='identity', na.rm=T, scale) + theme_minimal()
+NetflixDataYear <- NetflixData %>% group_by(release_year) %>% summarise_at(vars(imdb_score), ~mean(.))
+NetflixDataYear %>% ggplot() + geom_col(aes(x=release_year, y=imdb_score), stat='identity', na.rm=T, color='orange') + theme_minimal() + coord_cartesian(ylim=c(5,8.5)) + labs(title="Average IMDB ratings for movies released in years from 1950s to 2000s")
 ```
 
 Run time vs imdb scores?
 ```{r}
-Netflixdf %>% ggplot() + geom_bar(aes(x=runtime, y=imdb_score), stat='identity')
+
+NetflixDatadf %>% ggplot() + geom_point(aes(x=runtime, y=imdb_score), group=1.6, color='pink', size=1) +theme_minimal() + coord_cartesian(xlim=c(0,100))
 ```
 
 
