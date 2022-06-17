@@ -79,7 +79,8 @@ source("Question1/code/CovidWorldAverage.R")
 CovidWorldAverage <- CovidWorldAverage(CovidData)
 
 CovidSmokingPlotFinal <- CovidSmokingPlot + geom_hline(yintercept = 0.034218, color='blue', size=1.5) + geom_text(aes(max(location), 0.034218,label = "Calculated world average (2020)", vjust = - 1), col = "blue")
-
+```
+```{r}
 CovidSmokingPlotFinal
 ```
 We find that the country's average for proportion of total cases resulting in deaths from the data set provided is 0.034218 averaged across 2020. Add in this comparison to the graph.
