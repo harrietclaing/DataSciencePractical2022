@@ -46,7 +46,7 @@ View(CovidData)
 ```{r}
 CovidData %>% group_by(location) %>% summarise(count=n()) %>% mean(.)
 ```
-In the Our World in Data folder, we have data on 6 continents and many rows for N/A. We have approximately 800 periods, not consistent. We could isolate for 2020 per month from March.
+In the Our World in Data folder, we have data on 6 continents and many rows for N/A. We have approximately 800 periods, not consistent. We could isolate for 2020 per month from March. Removed the N/As.
 
 ```{r}
 library(lubridate)
@@ -84,8 +84,12 @@ CovidData %>% mutate(month = month(date)) %>% select(location, date, total_cases
 
 ```
 
-How quickly did different regions increase hospitalisation facilities? Did that time series lead or lag on ICU admission rates?
+How quickly did different regions increase hospitalisation facilities? Did that time series lead or lag on ICU admission rates? By removing the na values, we subset the data to begin at March 8th
 ```{r}
 
+source('Question1/code/HospitalICUPlot.R')
+
+HospitalICUPlot(data=CovidData, Continent="Asia")
 ```
+
 
