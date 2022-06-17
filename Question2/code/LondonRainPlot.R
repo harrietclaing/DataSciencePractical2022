@@ -11,11 +11,13 @@ LondonPlot <- function(data) {
 
     LondonRainPlot <- Londondf %>%
         ggplot() +
-        geom_line(aes(x=Year, y=precipitation), group=1, size=0.6, color='blue') +
-        geom_hline(yintercept = 469.9, color='red') +
+        geom_line(aes(x=Year, y=precipitation), group=1, size=1.3, alpha=0.8, color='blue') +
+        geom_hline(yintercept = 469.9, color='red', size=0.9) +
         ylab("Annual precipition (mm)") +
         labs(subtitle= "Source: Climate Knowledge Portal, World Bank", title="Annual precipitation in London in the last ten years compared with the average annual precipitation for South Africa") +
-        theme_light()
+        theme_light() +
+        geom_text(aes(max(Year), 469.9, label = "South Africa Avg. 469.9 mm", vjust = - 1), col = "red") +
+        theme_minimal()
 
     LondonRainPlot
 

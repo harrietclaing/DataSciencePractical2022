@@ -86,7 +86,7 @@ We find that the country's average for proportion of total cases resulting in de
 
 ## Figure 3: How quickly did different regions increase hospitalisation facilities? 
 
-Did that time series of hospital beds lead or lag on ICU admission rates? By removing the na values, we subset the data to begin at March 8th.
+Did that time series of hospital beds lead or lag on ICU admission rates? By removing the na values, we subset the data to begin at March 8th. Omitted Oceania because lacking data available.
 
 ```{r}
 
@@ -105,9 +105,6 @@ EuropeHospitalICUPlot
 NorthAmericaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="North America") + labs("North America weekly hospital admissions and weekly ICU admissions")
 NorthAmericaHospitalICUPlot
 
-OceaniaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="Oceania") + labs("Oceania weekly hospital admissions and weekly ICU admissions")
-OceaniaHospitalICUPlot
-
 SouthAmericaHospitalICUPlot <- HospitalICUPlot(data=CovidData, Continent="South America") + labs("South America weekly hospital admissions and weekly ICU admissions")
 SouthAmericaHospitalICUPlot
 ```
@@ -115,30 +112,25 @@ SouthAmericaHospitalICUPlot
 # Question 2: London weather
 
 ```{r}
-ReadLondonDataCSV <- function(dataroot){
-    library(readr)
-    read_csv(dataroot)
-}
+source("Question2/code/ReadLondonDataCSV.R")
 
 LondonData <- ReadLondonDataCSV("Question2/data/London/london_weather.csv")
 ```
-
-We first want to show the percentage of days in an average year that are sunny, based on previous 10 years. Data goes up to 31/12/2021. First, subset to last 10 years. Then, created Sunny dummy for days with some sunshine, but in order to be a good weather day the cloud cover must be less than 5.
+First, subset to last 10 years. Data goes up to 31/12/2021, therefore subset from 2001. 
 ```{r}
 library(lubridate)
 
-LondonData %>% subset(date>20010101) %>% mutate(Sunny = ifelse(sunshine>0, 1, 0)) %>% mutate(GoodWeather = ifelse(cloud_cover < 5 & Sunny == 1, 1, 0)) 
 ```
 
 Second, we want to try and show the rainfall over time. We want annual rainfall per year for the last ten years.
 ```{r}
 library(readr)
-LondonData <- read.csv("Question2/data/London/london_weather.csv")
 
 source('Question2/code/LondonRainPlot.R')
 
-LondonRainPlot <- LondonPlot(data= LondonData)
-   
+LondonRainPlot <- LondonPlot(data= LondonData) 
+
+LondonRainPlot   
 ```
 
 Third, we want to try and show average temperatures over time since 1970.

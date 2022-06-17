@@ -10,11 +10,12 @@ LondonTempPlot <- function(data){
 
 LondonTempPlot <- LondonTempdf %>%
     ggplot() +
-    geom_line(aes(x=Year, y=mean_temp), group=1, size=0.6, color='blue') +
-    geom_hline(yintercept = 17.5, color='red') +
+    geom_line(aes(x=Year, y=mean_temp), group=1, size=1.3, color='blue') +
+    geom_hline(yintercept = 17.5, color='red', size=0.9) +
+    geom_text(aes(median(Year), 17.5, label = "South Africa Avg. 17.5 degrees celcius", vjust = - 1), col = "red") +
     ylab("Annual average temperature") +
     labs(subtitle= "Source: Climate Knowledge Portal, World Bank", title="Average annual temperatures for London since 1970 with comparison to South Africa's average annual temperature") +
-    theme_light()
+    theme_minimal()
 
 LondonTempPlot
 }
