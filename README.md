@@ -1,11 +1,8 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
+# Data Science Practical 2022
 
+## Setting up the Question folders
 
-
+I set up each question in Texevier and put each question's related data within its separate folder.
 
 ```{r}
 
@@ -97,7 +94,7 @@ HospitalICUPlot(data=CovidData, Continent="Asia")
 HospitalICUPlot(data=CovidData, Continent="Asia")
 ```
 
-# Question 2
+# Question 2: London weather
 
 ```{r}
 ReadLondonDataCSV <- function(dataroot){
@@ -134,7 +131,7 @@ source('Question2/code/LondonTempPlot.R')
 LondonTempPlot(data=LondonData)
 ```
 
-Question 3
+# Question 3: Evolution of tennis players' performance over time
 
 First, write a function to read-in multiple csv sheets for rankings data
 
@@ -289,7 +286,7 @@ TennisData <-Data_Collating("Question3/data/Tennis")
 ```
 
 
-# Question 4
+# Question 4: Netflix streaming: Understanding what works and what doesn't
 
 We want to join the two datasets via 'id' variable. We are interested in seeing what 
 ```{r}
