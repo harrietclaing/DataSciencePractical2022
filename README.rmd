@@ -134,3 +134,85 @@ source('Question2/code/LondonTempPlot.R')
 LondonTempPlot(data=LondonData)
 ```
 
+Question 3
+
+First, write a function to read-in multiple csv sheets.
+```{r}
+ReadinMultipleCSV <- function(dataroot){
+        df <- list.files(dataroot, full.names = T, recursive = T) %>%
+            .[grepl(".csv", .)] %>%
+            map_df(~read.csv(.)) 
+        
+    df
+}  
+
+df <- list.files("Question3/data/Tennis" pattern = ".csv") %>% 
+    map_df(~read_csv(.))
+
+ df <- list.files("Question3/data/Tennis/", full.names = T, recursive = T) %>%
+            grepl(".csv") %>%
+            as.list(.) %>% 
+            map_df(~read.csv(.))
+ 
+datcolat <- list.files("Question3/data/Tennis/") %>%
+        # Ensure you only load the csv's, not the README.txt.
+        .[grepl(".csv", .)] %>%
+        as.list() %>%
+        map(~read.csv(.)) %>% bind_rows()
+        # equivalent to using map_df
+
+    datcolat
+            
+
+TennisData <- ReadinMultipleCSV("Question3/data/Tennis")
+    
+    %>%
+        map(~silentread(.)) %>% bind_rows()
+        # equivalent to using map_df
+
+Data_Collating <- function(Datroot){
+
+library(tidyverse)
+    library(dplyr)
+    library(vroom)
+
+files <- list.files(pattern="SALES-.*-2019.csv", full.names=TRUE)
+data <- vroom(files, col_select = c(article_1, article_2, article_3, etc), skip = 1)
+
+
+
+    # let's create a silent read function first (as it prints a load of nonsense if you use read_csv directly):
+    silentread <- function(x){
+        hushread <- purrr::quietly(read_csv)
+        df <- hushread(x)
+        df$result
+    }
+files <- list.files("Question3/data/Tennis", full.names = T, recursive = T, row.names=F) %>% .[grepl("atp_matches",.)] %>%
+        as.list() %>%
+        map(~read.csv(.)) %>% bind_rows()
+?vroom
+
+files <- fs::dir_ls(path= "Question3/data/Tennis", glob = "atp_matches-.csv")
+
+data <- vroom(files, col_select = c(winner_name, winner_hand, winner_age, minutes, winner_ht, tourney_date), skip = 1)
+
+%>%
+        # Ensure you only load the csv's, not the README.txt.
+        .[grepl("atp_matches-.csv", .)] %>%
+        as.list() %>%
+        map_df(~silentread(.)) 
+        # equivalent to using map_df
+datcolat
+}
+
+TennisData <-Data_Collating("Question3/data/Tennis")
+```
+
+
+# Question 4
+
+
+```{r}
+
+```
+
